@@ -6,8 +6,7 @@ import checkEmptyPayload from './middlewares/check-empty-payload';
 import checkContentTypeIsJson from './middlewares/check-content-type-is-json';
 import checkContentTypeIsSet from './middlewares/check-content-type-is-set';
 import errorHandler from './middlewares/error-handler';
-import createUserHandler from './handlers/users/create';
-import retrieveUserHandler from './handlers/users/retrieve';
+import handlers from './handlers';
 import injectHandlerDependencies from './utils/inject-handler-dependencies';
 import engines from './engines';
 import generateErrorMessage from './system-messages/errors';
@@ -15,8 +14,8 @@ import mongoose from 'mongoose';
 import db from './models';
 
 const handlerToEngineMap = new Map([
-  [createUserHandler, engines.users.create],
-  [retrieveUserHandler, engines.users.retrieve]
+  [handlers.users.create, engines.users.create],
+  [handlers.users.retrieve, engines.users.retrieve]
 ]);
 
 const app = express();
@@ -44,7 +43,7 @@ app.use(checkContentTypeIsJson);
 app.post(
   '/users',
   injectHandlerDependencies(
-    createUserHandler,
+    handlers.users.create,
     db,
     handlerToEngineMap,
     generateErrorMessage
@@ -54,7 +53,7 @@ app.post(
 app.get(
   '/users/:userId',
   injectHandlerDependencies(
-    retrieveUserHandler,
+    handlers.users.retrieve,
     db,
     handlerToEngineMap,
     generateErrorMessage
