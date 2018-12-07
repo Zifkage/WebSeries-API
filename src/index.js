@@ -9,15 +9,14 @@ import errorHandler from './middlewares/error-handler';
 import createUserHandler from './handlers/users/create';
 import retrieveUserHandler from './handlers/users/retrieve';
 import injectHandlerDependencies from './utils/inject-handler-dependencies';
-import createUserEngine from './engines/users/create';
-import retrieveUserEngine from './engines/users/retrieve';
+import engines from './engines';
 import generateErrorMessage from './system-messages/errors';
 import mongoose from 'mongoose';
 import db from './models';
 
 const handlerToEngineMap = new Map([
-  [createUserHandler, createUserEngine],
-  [retrieveUserHandler, retrieveUserEngine]
+  [createUserHandler, engines.users.create],
+  [retrieveUserHandler, engines.users.retrieve]
 ]);
 
 const app = express();
