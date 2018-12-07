@@ -4,7 +4,7 @@ Feature: General
 
         All POST, PUT and PATCH requests must have non-zero values for its "Content-Length" header
 
-        When the client creates a <method> request to /users
+        When the client creates a <method> request to /api/users
         And attaches a generic empty payload
         And sends the request
         Then our API should respond with a 400 HTTP status code
@@ -21,7 +21,7 @@ Feature: General
 
         All requests which has non-zero values for its "Content-Length" header must have its "Content-Type" header set
 
-        When the client creates a POST request to /users
+        When the client creates a POST request to /api/users
         And attaches a generic non-JSON payload
         But without a "Content-Type" header set
         And sends the request
@@ -33,7 +33,7 @@ Feature: General
 
         All requests which has a "Content-Type" header must set its value to contain "application/json"
 
-        When the client creates a POST request to /users
+        When the client creates a POST request to /api/users
         And attaches a generic non-JSON payload
         And sends the request
         Then our API should respond with a 415 HTTP status code

@@ -5,10 +5,10 @@ Feature: Create User
     it is invalid.
 
     Scenario Outline: Bad Client Requests
-        If the client sends a POST request to /users with a unsupported payload, it should receive a response with
+        If the client sends a POST request to /api/users with a unsupported payload, it should receive a response with
         a 4xx status code.
 
-        When the client creates a POST request to /users
+        When the client creates a POST request to /api/users
         And attaches a generic <payloadType> payload
         And sends the request
         Then our API should respond with a <statusCode> HTTP status code
@@ -23,7 +23,7 @@ Feature: Create User
 
     Scenario Outline: Bad Request Payload
 
-        When the client creates a POST request to /users
+        When the client creates a POST request to /api/users
         And attaches a Create User payload which is missing the <missingField> field
         And sends the request
         Then our API should respond with a 400 HTTP status code
@@ -38,7 +38,7 @@ Feature: Create User
 
     Scenario Outline: Request Payload with invalid email format
 
-        When the client creates a POST request to /users
+        When the client creates a POST request to /api/users
         And attaches a Create User payload where the email field is exactly <email>
         And sends the request
         Then our API should respond with a 400 HTTP status code
@@ -53,7 +53,7 @@ Feature: Create User
 
     Scenario: Minimal Valid User
 
-        When the client creates a POST request to /users
+        When the client creates a POST request to /api/users
         And attaches a valid Create User payload
         And sends the request
         Then our API should respond with a 201 HTTP status code
@@ -64,7 +64,7 @@ Feature: Create User
 
     Scenario Outline: Valid Profile
 
-        When the client creates a POST request to /users/
+        When the client creates a POST request to /api/users/
         And attaches <payload> as the payload
         And sends the request
         Then our API should respond with a 201 HTTP status code

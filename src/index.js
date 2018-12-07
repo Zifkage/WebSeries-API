@@ -6,18 +6,8 @@ import checkEmptyPayload from './middlewares/check-empty-payload';
 import checkContentTypeIsJson from './middlewares/check-content-type-is-json';
 import checkContentTypeIsSet from './middlewares/check-content-type-is-set';
 import errorHandler from './middlewares/error-handler';
-import handlers from './handlers';
-import injectHandlerDependencies from './utils/inject-handler-dependencies';
-import engines from './engines';
-import generateErrorMessage from './system-messages/errors';
 import mongoose from 'mongoose';
-import db from './models';
-
-const handlerToEngineMap = new Map([
-  [handlers.users.create, engines.users.create],
-  [handlers.users.retrieve, engines.users.retrieve]
-]);
-
+import routes from './routes';
 const app = express();
 
 // Connection to mlab
@@ -40,30 +30,12 @@ app.use(checkEmptyPayload);
 app.use(checkContentTypeIsSet);
 app.use(checkContentTypeIsJson);
 
-app.post(
-  '/users',
-  injectHandlerDependencies(
-    handlers.users.create,
-    db,
-    handlerToEngineMap,
-    generateErrorMessage
-  )
-);
-
-app.get(
-  '/users/:userId',
-  injectHandlerDependencies(
-    handlers.users.retrieve,
-    db,
-    handlerToEngineMap,
-    generateErrorMessage
-  )
-);
+app.use('/api', routes.api);
 
 app.use(errorHandler);
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(
-    `Hobnod API server listening on port ${process.env.SERVER_PORT}!`
+    `WebSeries API server listening on port ${process.env.SERVER_PORT}!`
   );
 });
