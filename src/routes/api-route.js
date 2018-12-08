@@ -26,12 +26,7 @@ router.post(
 
 router.get(
   '/users/:userId',
-  injectHandlerDependencies(
-    handlers.users.retrieve,
-    db,
-    handlerToEngineMap,
-    generateErrorMessage
-  )
+  injectHandlerDependencies(handlers.users.retrieve, db, handlerToEngineMap)
 );
 
 router.get(
