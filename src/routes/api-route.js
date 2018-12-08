@@ -8,7 +8,8 @@ import db from '../models';
 
 const handlerToEngineMap = new Map([
   [handlers.users.create, engines.users.create],
-  [handlers.users.retrieve, engines.users.retrieve]
+  [handlers.users.retrieve, engines.users.retrieve],
+  [handlers.users.list, engines.users.list]
 ]);
 
 const router = express.Router();
@@ -31,6 +32,11 @@ router.get(
     handlerToEngineMap,
     generateErrorMessage
   )
+);
+
+router.get(
+  '/users',
+  injectHandlerDependencies(handlers.users.list, db, handlerToEngineMap)
 );
 
 export default router;
